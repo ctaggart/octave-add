@@ -1,0 +1,24 @@
+[package]
+name = "octave-add"
+version = "0.1.0"
+authors = ["Cameron Taggart <cameron.taggart@gmail.com>"]
+build = "build.rs"
+description = "An example octave extension written in Rust"
+keywords = ["Octave"]
+license = "GPL"
+homepage = "https://github.com/ctaggart/octh-examples"
+repository = "https://github.com/ctaggart/octh-examples"
+edition = "2018"
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+# octh = { path = "../../github/octh" }
+octh = { git = "https://github.com/ctaggart/octh", branch = "master" }
+
+# [profile.dev]
+# panic = "abort"
+
+# [profile.release]
+# panic = "abort"
