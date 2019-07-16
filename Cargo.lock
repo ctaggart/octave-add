@@ -205,13 +205,13 @@ dependencies = [
 name = "octave-add"
 version = "0.1.0"
 dependencies = [
- "octh 0.1.0 (git+https://github.com/ctaggart/octh)",
+ "octh 0.1.0 (git+https://github.com/ctaggart/octh?branch=snap)",
 ]
 
 [[package]]
 name = "octh"
 version = "0.1.0"
-source = "git+https://github.com/ctaggart/octh#d81b8eee5fbded001eb51fdd3eca850c42b8bb06"
+source = "git+https://github.com/ctaggart/octh?branch=snap#b6e36c60aec854936eb1b5205fac029487e9fd25"
 dependencies = [
  "bindgen 0.50.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cc 1.0.37 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -402,7 +402,7 @@ dependencies = [
 "checksum log 0.4.7 (registry+https://github.com/rust-lang/crates.io-index)" = "c275b6ad54070ac2d665eef9197db647b32239c9d244bfb6f041a766d00da5b3"
 "checksum memchr 2.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "88579771288728879b57485cc7d6b07d648c9f0141eb955f8ab7f9d45394468e"
 "checksum nom 4.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2ad2a91a8e869eeb30b9cb3119ae87773a8f4ae617f41b1eb9c154b2905f7bd6"
-"checksum octh 0.1.0 (git+https://github.com/ctaggart/octh)" = "<none>"
+"checksum octh 0.1.0 (git+https://github.com/ctaggart/octh?branch=snap)" = "<none>"
 "checksum peeking_take_while 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "19b17cddbe7ec3f8bc800887bab5e717348c95ea2ca0b1bf0837fb964dc67099"
 "checksum proc-macro2 0.4.30 (registry+https://github.com/rust-lang/crates.io-index)" = "cf3d2011ab5c909338f7887f4fc896d35932e29146c12c8d01da6b22a80ba759"
 "checksum quick-error 1.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "9274b940887ce9addde99c4eee6b5c44cc494b182b97e73dc8ffdcb3397fd3f0"

@@ -15,7 +15,7 @@ crate-type = ["dylib"]
 
 [dependencies]
 # octh = { path = "../../github/octh" }
-octh = { git = "https://github.com/ctaggart/octh", branch = "master" }
+octh = { git = "https://github.com/ctaggart/octh", branch = "snap" }
 
 # [profile.dev]
 # panic = "abort"
