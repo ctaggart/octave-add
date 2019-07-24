@@ -1,6 +1,7 @@
 extern crate octh;
 
 use std::ffi::CString;
+use std::mem::MaybeUninit;
 
 // https://thefullsnack.com/en/string-ffi-rust.html
 
@@ -24,7 +25,7 @@ pub unsafe extern "C" fn Gadd (shl: *const octh::root::octave::dynamic_library, 
 
 #[allow(non_snake_case)]
 pub unsafe extern "C" fn Fadd (_args: *const octh::root::octave_value_list, nargout: i32) -> octh::root::octave_value_list {
-    // let out = octh::root::octave_value_list::create();
-    let out = octh::root::octave_value_list_create(nargout);
-    return out;
+    let mut list = MaybeUninit::<octh::root::octave_value_list>::uninit();
+    octh::root::octave_value_list_create(list.as_mut_ptr(), nargout);
+    list.assume_init()
 }

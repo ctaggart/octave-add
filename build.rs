@@ -9,8 +9,9 @@ fn main() {
             println!("cargo:rustc-link-lib=octinterp-7");
         },
         "x86_64-unknown-linux-gnu" => {
-            println!("cargo:rustc-link-search=/snap/octave/5/usr/lib/x86_64-linux-gnu");
-            println!("cargo:rustc-link-search=/snap/octave/5/usr/lib/octave/5.1.0");
+            // println!("cargo:rustc-link-search=/snap/octave/5/usr/lib/x86_64-linux-gnu");
+            // println!("cargo:rustc-link-search=/snap/octave/5/usr/lib/octave/5.1.0");
+            println!("cargo:rustc-link-search=/usr/local/lib/octave/6.0.0");
             println!("cargo:rustc-link-lib=octave");
             println!("cargo:rustc-link-lib=octinterp");
         },
