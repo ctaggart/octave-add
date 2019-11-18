@@ -1,4 +1,5 @@
 use std::ffi::CString;
+use std::ffi::CStr;
 use std::mem::MaybeUninit;
 use core::ffi::c_void;
 
@@ -7,14 +8,19 @@ use core::ffi::c_void;
 #[no_mangle]
 pub unsafe extern "C" fn Gadd (shl: *const octh::root::octave::dynamic_library, _relative: bool) -> *mut octh::root::octave_dld_function {
 
-    let name = CString::new("add").unwrap();
-    let pname = name.as_ptr() as *const octh::root::std::string;
-    std::mem::forget(pname);
+    // let name = CString::new("add").unwrap();
+    // let name = octh::root::stdstring_new("add");
+    let name = CStr::from_bytes_with_nul(b"add\0").unwrap();
+    let sname = octh::root::stdstring_new(name.as_ptr());
+    let pname = sname as *const octh::root::std::string;
+    // std::mem::forget(pname);
 
-    let doc = CString::new("adds inputs and returns sum to all outputs").unwrap();
-    let pdoc = doc.as_ptr() as *const octh::root::std::string;
-    std::mem::forget(pdoc);
-    
+    // let doc = CString::new("adds inputs and returns sum to all outputs").unwrap();
+    let doc = CStr::from_bytes_with_nul(b"adds inputs and returns sum to all outputs\0").unwrap();
+    let sdoc = octh::root::stdstring_new(doc.as_ptr());
+    let pdoc = sdoc as *const octh::root::std::string;
+    // std::mem::forget(pdoc);
+
     let fcn = octh::root::octave_dld_function_create(Some(Fadd), shl, pname, pdoc);
     // if relative {
     //     fcn.mark_relative();
@@ -28,10 +34,20 @@ pub unsafe extern "C" fn Fadd (_args: *const octh::root::octave_value_list, narg
     // let out = octh::root::octave_value_list::create();
     // : octh::root::octave_value_list
 
-    let mut list = MaybeUninit::<octh::root::octave_value_list>::uninit();
-    let out = octh::root::octave_value_list_create(list.as_mut_ptr(), nargout);
-    return list.assume_init();
-    // error: out of memory or dimension too large for Octave's index type
+    let mut mlist = MaybeUninit::<octh::root::octave_value_list>::uninit();
+    let plist = mlist.as_mut_ptr();
+    octh::root::octave_value_list_new(plist, nargout);
+    // let mut list = mlist.assume_init();
+
+    let mut mvalue = MaybeUninit::<octh::root::octave_value>::uninit();
+    let pvalue = mvalue.as_mut_ptr();
+    octh::root::octave_value_octave_value(pvalue, 3);
+    // let value = mvalue.assume_init();
+
+    octh::root::octave_value_list_append(plist, pvalue);
+
+    // return list;
+    return mlist.assume_init();
 
     // let mut list = MaybeUninit::<octh::root::octave_value_list>::uninit();
     // let out = octh::root::octave_value_list::new(list.as_mut_ptr());
@@ -49,5 +65,5 @@ pub unsafe extern "C" fn Fadd (_args: *const octh::root::octave_value_list, narg
     // let list = octh::root::octave_base_value_list_value(p_v);
     // error: out of memory or dimension too large for Octave's index type
 
-    return list;
+    // return list;
 }
