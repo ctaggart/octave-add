@@ -20,26 +20,37 @@ pub unsafe extern "C" fn Gadd (shl: *const octh::root::octave::dynamic_library, 
 }
 
 #[allow(non_snake_case)]
-unsafe extern "C" fn Fadd (_args: *const octh::root::octave_value_list, nargout: i32) -> octh::root::octave_value_list {
+unsafe extern "C" fn Fadd (args: *const octh::root::octave_value_list, nargout: i32) -> octh::root::octave_value_list {
+    let nargin = octh::root::octave_value_list_length(args);
+    println!("nargin {}", nargin);
     println!("nargout {}", nargout);
+
+    for i in 0..nargin {
+        println!("\narg {}", i);
+        let mut mvalue = MaybeUninit::<octh::root::octave_value>::uninit();
+        let pvalue = mvalue.as_mut_ptr();
+        octh::root::octave_value_list_get_value(pvalue, args, i);
+        // let mut value = mvalue.assume_init();
+
+        println!("is_scalar_type {}", octh::root::octave_value_is_scalar_type(pvalue));
+        println!("is_string {}", octh::root::octave_value_is_string(pvalue));
+        println!("is_true {}", octh::root::octave_value_is_true(pvalue));
+        println!("is_uint16_type {}", octh::root::octave_value_is_uint16_type(pvalue));
+        println!("is_uint32_type {}", octh::root::octave_value_is_uint32_type(pvalue));
+        println!("is_uint64_type {}", octh::root::octave_value_is_uint64_type(pvalue));
+        println!("is_uint8_type {}", octh::root::octave_value_is_uint8_type(pvalue));
+        println!("isinteger {}", octh::root::octave_value_isinteger(pvalue));
+        println!("isnull {}", octh::root::octave_value_isnull(pvalue));
+        println!("isnumeric {}", octh::root::octave_value_isnumeric(pvalue));
+        println!("isreal {}", octh::root::octave_value_isreal(pvalue));
+    }
 
     let mut mlist = MaybeUninit::<octh::root::octave_value_list>::uninit();
     let plist = mlist.as_mut_ptr();
     octh::root::octave_value_list_new(plist, nargout);
-    
-    let mut value4 = octh::root::octave_value::new63(&octh::root::octave_int32 {ival: 4, _phantom_0: PhantomData});
 
-    println!("is_scalar_type {}", octh::root::octave_value_is_scalar_type(&mut value4));
-    println!("is_uint16_type {}", octh::root::octave_value_is_uint16_type(&mut value4));
-    println!("is_uint32_type {}", octh::root::octave_value_is_uint32_type(&mut value4));
-    println!("is_uint64_type {}", octh::root::octave_value_is_uint64_type(&mut value4));
-    println!("is_uint8_type {}", octh::root::octave_value_is_uint8_type(&mut value4));
-    println!("isinteger {}", octh::root::octave_value_isinteger(&mut value4));
-    println!("isnull {}", octh::root::octave_value_isnull(&mut value4));
-    println!("isnumeric {}", octh::root::octave_value_isnumeric(&mut value4));
-    println!("isreal {}", octh::root::octave_value_isreal(&mut value4));
-
-    octh::root::octave_value_list_set_value(plist, 0, &mut value4);
+    // let mut value = octh::root::octave_value::new63(&octh::root::octave_int32 {ival: 4, _phantom_0: PhantomData});
+    // octh::root::octave_value_list_set_value(plist, 0, pvalue);
 
     return mlist.assume_init();
 }
